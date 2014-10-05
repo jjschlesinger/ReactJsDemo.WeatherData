@@ -1,0 +1,26 @@
+﻿@using System.Web.Optimization
+@using ReactJsDemo.WeatherData.Services
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    @Styles.Render("~/Content/bootstrap")
+</head>
+<body>
+    <div id="content">
+        @Html.React("WeatherComponent", new { data = new { items = new WeatherDataService().GetLocal().Select(x => new { day = DateTime.Parse(x.timestamp.ToString()).ToShortDateString(), maxTemp = x.tempMax, meanTemp = x.tempAvg, minTemp = x.tempMin }) } }) 
+    </div>
+    @Scripts.Render("~/bundles/bootstrap")
+    <script src="@Url.Content("~/Scripts/react-0.11.2.js")"></script>
+    <script src="@Url.Content("~/Scripts/WeatherComponent.jsx")"></script>
+    @Html.ReactInitJavaScript()
+
+</body>
+</html>
